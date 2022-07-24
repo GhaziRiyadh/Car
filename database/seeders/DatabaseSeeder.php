@@ -32,11 +32,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        $admin = Role::create(['name' => 'admin']);
+        $admin = Role::create(['name' => 'admin', 'display_name' => 'admin']);
         $adminUser->attachRole($admin);
 
-        $customer = Role::create(['name' => 'customer', 'display_name' => 'زبون']);
-        $seller = Role::create(['name' => 'seller', 'display_name' => 'تاجر']);
+        $seller = Role::create(['name' => 'customer', 'display_name' => 'زبون']);
+        // $seller = Role::create(['name' => 'seller', 'display_name' => 'تاجر']);
 
         $read = Permission::create(['name' => 'read']);
         $write = Permission::create(['name' => 'write']);
@@ -49,7 +49,22 @@ class DatabaseSeeder extends Seeder
             BillStatus::create(['name' => $status]);
 
         User::factory(100)->create();
-        Bill::factory(500)->create();
+        Bill::factory(100)->create();
+        Product::factory(200)->create();
 
+        foreach (Bill::all() as $bill) {
+            $number = rand(1, 15);
+            $total = 0;
+            for ($i = 1; $i < $number; $i++) {
+                $product = Product::find(rand(1, Product::count()));
+                $product->bills()->attach($bill);
+                $total += intval($product->price);
+            }
+            $bill->update(['total' => intval($total)]);
+        }
+
+        foreach (User::all() as $key) {
+            $key->attachRole($seller);
+        }
     }
 }

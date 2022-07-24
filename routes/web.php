@@ -93,7 +93,7 @@ Route::middleware([
         Route::prefix('bill')->name('bill.')->controller(BillController::class)->group(function () {
             Route::get('change-status/{bill}/{state}', 'changeStatus')->name('billChangeStatus');
             Route::get('status-count', 'statusCount')->name('billStatusCount');
-            Route::get('get-bills/{status:name}', function (BillStatus $status){
+            Route::get('get-bills/{status:name}', function (BillStatus $status) {
                 return BillController::getBills(status: $status->id)->toJson();
             })->name('getBills');
         });
@@ -101,13 +101,12 @@ Route::middleware([
         Route::prefix('appUsers')->name('appUsers.')->controller(UsersController::class)->group(function () {
             Route::get('change-status/{user}/{status}', 'changeStatus')->name('appUsersChangeStatus');
             Route::get('status-count', 'statusCount')->name('appUsersStatusCount');
-            Route::get('get-users/{type}', function ($type){
+            Route::get('get-users/{type}', function ($type) {
                 return UsersController::getUsers(type: $type)->toJson();
             })->name('getUsers');
         });
 
         // for app info
         Route::post('app-info/update/{appInfo}', [AppInfoController::class, 'update'])->name('app_info.update');
-
     });
 });

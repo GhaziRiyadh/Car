@@ -18,17 +18,17 @@ class UsersController extends Controller
      * @param null $type
      * @return Collection|array|\Illuminate\Support\Collection
      */
-    public static function getUsers($name = null, $id = null, $type = null): Collection|array|\Illuminate\Support\Collection
+    public static function getUsers($name = null, $id = null, $type = null)
     {
         return User::query()
-            ->when($name, fn($q, $r) => $q->where('name', 'like', '%' . $r . '%'))
-            ->when($id, fn($q, $r) => $q->where('id', '=', $r))
-            ->when($type, fn($q, $r) => $q->whereRelation('roles', 'name', '=', $r))
+            ->when($name, fn ($q, $r) => $q->where('name', 'like', '%' . $r . '%'))
+            ->when($id, fn ($q, $r) => $q->where('id', '=', $r))
+            ->when($type, fn ($q, $r) => $q->whereRelation('roles', 'display_name', 'like', $r))
             ->get()->map(function ($v) {
                 $permissions = $v->roles()->get()->map(function ($v) {
-                    return $v->permissions()->get()->map(fn($v) => $v['name']);
+                    return $v->permissions()->get()->map(fn ($v) => $v['name']);
                 });
-                $userRole = $v->roles()->get()->map(fn($r) => $r['name']);
+                $userRole = $v->roles()->get()->map(fn ($r) => $r['name']);
                 return [
                     'id' => $v['id'],
                     'name' => $v['name'],
@@ -55,7 +55,7 @@ class UsersController extends Controller
     public function update(UsersRequest $request, User $id): JsonResponse
     {
         $data = $request->safe()->except(['roles', 'password']);
-        $roles = collect($request->roles)->filter(fn($v) => $v)->keys();
+        $roles = collect($request->roles)->filter(fn ($v) => $v)->keys();
         $id->update($data);
         $id->syncRoles($roles);
 
@@ -80,7 +80,7 @@ class UsersController extends Controller
 
     public function statusCount(): JsonResponse
     {
-        $count = Role::where('id','>',1)->get()->map(fn($v) => ['name' => $v->display_name, 'count' => User::whereRelation('roles', 'name', '=', $v->name)->count()])->toArray();
+        $count = Role::where('id', '>', 1)->get()->map(fn ($v) => ['name' => $v->display_name, 'count' => User::whereRelation('roles', 'name', '=', $v->name)->count()])->toArray();
 
         return response()->json($count);
     }

@@ -2,24 +2,25 @@
     <div class=" h-[80vh] w-full overflow-auto shadow-xl sm:rounded-lg px-6">
 
         <!-- top -->
-        <div v-if="!['APP_INFO'].includes(isType.type)" class="w-full border-b-2 h-1/5 mt-2">
+        <div v-if="!['APP_INFO'].includes(isType.type)" class="w-full border-b-2 py-4 mt-2">
             <div class="flex w-full items-center justify-between text-sm">
                 <div></div>
                 <div class="flex items-center justify-around text-sm">
                     <div class="flex items-center mx-1">
-                        <JetInput v-model="searchData" type="text" class="text-sm" :placeholder="`${isType.title}`"/>
+                        <JetInput v-model="searchData" type="text" class="text-sm" :placeholder="`${isType.title}`" />
                     </div>
                     <SecondaryButton class="mx-1" @click="getRecords(searchData, type)">بحث</SecondaryButton>
-                    <PrimaryButton v-show="!['BILL'].includes(isType.type)" @click="showForm.add = true" class="mx-1">اضافة</PrimaryButton>
+                    <PrimaryButton v-show="!['BILL'].includes(isType.type)" @click="showForm.add = true" class="mx-1">
+                        اضافة</PrimaryButton>
                 </div>
             </div>
         </div>
 
-        <app_users v-if="['APP_MANAGEMENT','APP_USERS'].includes(isType.type)" @closeModel="showForm.update = false; showForm.add = false"
-                 :get-data="showData.data" :roles="showData.roles" :type="isType.type" :add-form="showForm.add"/>
+        <app_users v-if="['APP_MANAGEMENT', 'APP_USERS'].includes(isType.type)" :get-data="showData.data"
+            :roles="showData.roles" :type="isType.type" :add-form="showForm.add" />
 
         <app_info v-if="isType.type === 'APP_INFO'" :getData="showData.data" :updateForm="showForm.update"
-                  @closeModel="showForm.update = false; showForm.add = false"/>
+            @closeModel="showForm.update = false; showForm.add = false" />
     </div>
 </template>
 
