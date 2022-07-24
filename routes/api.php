@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\FrontEndController;
+use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\Dashboard\Users\RoleController;
+use App\Http\Controllers\FlutterAppController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -17,6 +19,14 @@ Route::get('/get-file', function (Request $request) {
     // return response()->json(['path' => $request->file('file')->store('test')]);
     return response()->download(public_path('Files/test/1.pdf'), '1.pdf');
 });
+
+//flutter api
+Route::post('get/companies',[FlutterAppController::class,'getAllCompanies']);
+Route::get('get/company/cars',[FlutterAppController::class,'getCompanyCars']);
+
+
+
+
 
 // login
 Route::post('api-login', [UserController::class, 'login']);
