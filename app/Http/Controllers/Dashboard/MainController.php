@@ -57,7 +57,7 @@ class MainController extends Controller
 
             // APP management
             'APP_MANAGEMENT', 'APP_USERS' => [
-                'data' => UsersController::getUsers($name, type: 'customer'),
+                'data' => UsersController::getUsers($name),
                 'roles' => []
             ],
 
@@ -68,7 +68,7 @@ class MainController extends Controller
 
             // users
             'USER', 'USERS' => [
-                'data' => UsersController::getUsers($name),
+                'data' => UsersController::getUsers($name, type: 'admin'),
                 'roles' => RoleController::getRole(),
             ],
             'ROLE' => [

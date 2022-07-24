@@ -18,13 +18,12 @@ return new class extends Migration
             $table->id();
             $table->char('name', 50);
             $table->integer('price');
-            $table->integer('quality_id');
+            $table->foreignId('quality_id');
             $table->integer('piece_number');
             $table->integer('percentage_of_sale');
-            $table->integer('car_id');
+            $table->foreignId('car_id');
             $table->timestamps();
         });
-
     }
 
     /**

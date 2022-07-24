@@ -22740,6 +22740,10 @@ __webpack_require__.r(__webpack_exports__);
     type: {
       type: String,
       "default": 'button'
+    },
+    status: {
+      type: Boolean,
+      "default": false
     }
   },
   setup: function setup(__props, _ref) {
@@ -25586,16 +25590,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         add: this.addForm,
         update: this.updateForm
       },
-      editData: {
-        id: '',
-        seller: '',
-        payer: '',
-        date: '',
-        status: '',
-        products: [],
-        total: '',
-        status_id: 0
-      },
+      status: false,
       showData: this.getData,
       showRoles: this.roles,
       checkRole: [],
@@ -25604,7 +25599,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       student: [{}],
       checkStudent: [],
       count: {},
-      isUser: ''
+      isUser: 'زبون'
     };
   },
   watch: {
@@ -25624,8 +25619,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       this.isType = nv;
     }
   },
-  created: function created() {
-    this.getStatusAppUsersCount();
+  created: function created() {// this.getStatusAppUsersCount()
   },
   methods: {
     getStatusAppUsersCount: function getStatusAppUsersCount() {
@@ -25638,13 +25632,16 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     changeStatus: function changeStatus(id, status) {
       var _this2 = this;
 
+      this.status = true;
       axios__WEBPACK_IMPORTED_MODULE_7___default().get(route('appUsers.appUsersChangeStatus', {
         user: id,
         status: status
       })).then(function (res) {
-        _this2.showData = res.data;
+        _this2.showData = res.data; // this.getStatusAppUsersCount()
 
-        _this2.getStatusAppUsersCount();
+        _this2.getUsers();
+
+        _this2.status = false;
       });
     },
     getUsers: function getUsers() {
@@ -28073,12 +28070,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-var _hoisted_1 = ["type"];
+var _hoisted_1 = ["disabled", "type"];
+var _hoisted_2 = {
+  key: 0,
+  "class": "flex items-center justify-center"
+};
+
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "animate-spin border-2 border-green-100 border-r-red-600 mx-1 rounded-full h-8 w-8"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_4 = [_hoisted_3];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+    disabled: $props.status,
     type: $props.type,
     "class": "inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition"
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default")], 8
+  }, [$props.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, _hoisted_4)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default", {
+    key: 1
+  })], 8
   /* PROPS */
   , _hoisted_1);
 }
@@ -30481,7 +30493,7 @@ var _hoisted_1 = {
 };
 var _hoisted_2 = {
   key: 0,
-  "class": "w-full border-b-2 h-1/5 mt-2"
+  "class": "w-full border-b-2 py-4 mt-2"
 };
 var _hoisted_3 = {
   "class": "flex w-full items-center justify-between text-sm"
@@ -30500,7 +30512,7 @@ var _hoisted_6 = {
 
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("بحث");
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("اضافة");
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" اضافة");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_JetInput = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("JetInput");
@@ -30551,10 +30563,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, !['BILL'].includes($data.isType.type)]])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ['APP_MANAGEMENT', 'APP_USERS'].includes($data.isType.type) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_users, {
     key: 1,
-    onCloseModel: _cache[3] || (_cache[3] = function ($event) {
-      $data.showForm.update = false;
-      $data.showForm.add = false;
-    }),
     "get-data": $data.showData.data,
     roles: $data.showData.roles,
     type: $data.isType.type,
@@ -30565,7 +30573,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 2,
     getData: $data.showData.data,
     updateForm: $data.showForm.update,
-    onCloseModel: _cache[4] || (_cache[4] = function ($event) {
+    onCloseModel: _cache[3] || (_cache[3] = function ($event) {
       $data.showForm.update = false;
       $data.showForm.add = false;
     })
@@ -30594,7 +30602,7 @@ var _hoisted_1 = {
 };
 var _hoisted_2 = {
   key: 0,
-  "class": "w-full border-b-2 my-2"
+  "class": "w-full border-b-2 my-2 py-2"
 };
 var _hoisted_3 = {
   "class": "flex w-full items-center justify-between text-sm"
@@ -32474,76 +32482,67 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "w-full h-10 flex items-center justify-start my-1"
+  "class": "w-full h-[70vh]"
 };
-var _hoisted_2 = ["onClick"];
-var _hoisted_3 = {
-  "class": "p-1 flex items-center text-xs justify-center text-center"
-};
-var _hoisted_4 = {
-  "class": "w-full h-[60vh]"
-};
-var _hoisted_5 = {
+var _hoisted_2 = {
   "class": "h-4/5 overflow-auto snap-y scroll-smooth span-center bg-gray-50 p-1"
 };
+var _hoisted_3 = {
+  "class": "mx-auto w-1/6 whitespace-nowrap"
+};
+var _hoisted_4 = {
+  "class": "mx-auto w-2/6 whitespace-nowrap"
+};
+var _hoisted_5 = {
+  "class": "mx-auto w-2/6 whitespace-nowrap"
+};
 var _hoisted_6 = {
-  "class": "mx-auto w-1/6 whitespace-nowrap overflow-auto"
+  "class": "mx-auto w-2/6 whitespace-nowrap"
 };
-var _hoisted_7 = {
-  "class": "mx-auto w-1/6 whitespace-nowrap overflow-auto"
-};
+var _hoisted_7 = ["onClick"];
 var _hoisted_8 = {
-  "class": "mx-auto w-1/6 whitespace-nowrap overflow-auto"
+  key: 0,
+  "class": "flex items-center justify-center"
 };
-var _hoisted_9 = {
-  "class": "mx-auto w-1/6 whitespace-nowrap overflow-auto"
-};
-var _hoisted_10 = {
-  "class": "mx-auto w-1/6 whitespace-nowrap overflow-auto"
-};
+
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "animate-spin border-2 border-green-100 border-r-red-600 mx-1 rounded-full h-8 w-8"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_10 = [_hoisted_9];
 var _hoisted_11 = {
-  "class": "py-1 px-2 border-primary text-primary hover:bg-primary hover:text-white file:hover:shadow-lg"
+  "class": "py-1 px-2 border-primary rounded-lg text-primary hover:bg-primary hover:text-white hover:shadow-lg"
 };
 var _hoisted_12 = {
-  "class": "py-1 px-2 border-primary text-primary hover:bg-primary hover:text-white file:hover:shadow-lg"
+  "class": "py-1 px-2 border-primary rounded-lg text-primary hover:bg-primary hover:text-white hover:shadow-lg"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.count, function (item) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"w-full h-10 flex items-center justify-start my-1\">\n            <div v-for=\"item in count\" :key=\"item.name\"\n                class=\"flex items-center justify-around border rounded-lg mx-1 cursor-pointer\"\n                :class=\"isUser === item.name ? 'bg-primary text-gray-50' : 'hover:bg-primary hover:text-gray-50 text-gray-900'\"\n                @click=\"isUser = item.name; getUsers()\">\n                <span class=\"p-1 flex items-center text-xs justify-center text-center\">{{ item.name }}</span>\n                <span class=\"h-8 w-8 text-xs m-1 rounded-full flex items-center justify-center bg-white\"\n                    :class=\"isUser === item.name ? ' text-primary' : ' text-gray-900'\">\n                    {{ item.count }}\n                </span>\n            </div>\n        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" tables "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.showData, function (item, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-      key: item.name,
-      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["flex items-center justify-around border rounded-lg mx-1 cursor-pointer", $data.isUser === item.name ? 'bg-primary text-gray-50' : 'hover:bg-primary hover:text-gray-50 text-gray-900']),
-      onClick: function onClick($event) {
-        $data.isUser = item.name;
-        $options.getUsers();
-      }
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1
+      "class": "flex bg-white min-h-[6vh] rounded-lg items-center text-center text-xs shadow-lg my-2 cursor-pointer",
+      key: index
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_3, "#" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.id), 1
+    /* TEXT */
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_4, "الاسم : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1
+    /* TEXT */
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_5, "الايميل: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1
+    /* TEXT */
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_6, "التلفون: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["h-8 w-8 text-xs m-1 rounded-full flex items-center justify-center bg-white", $data.isUser === item.name ? ' text-primary' : ' text-gray-900'])
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.count), 3
-    /* TEXT, CLASS */
-    )], 10
-    /* CLASS, PROPS */
-    , _hoisted_2);
-  }), 128
-  /* KEYED_FRAGMENT */
-  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" tables "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.showData, function (item, index) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-      "class": "flex bg-white min-h-[6vh] rounded-lg items-center text-center text-sm shadow-lg my-2 hover:bg-secondary hover:text-white cursor-pointer",
-      key: index
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_6, "#" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.id), 1
-    /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, "الاسم : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1
-    /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_8, "الايميل: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1
-    /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_9, "التلفون: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1
-    /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_11, "الغاء الحظر", 512
+      onClick: function onClick($event) {
+        return $options.changeStatus(item.id, !item.blocked);
+      },
+      "class": "mx-auto w-1/6 whitespace-nowrap"
+    }, [$data.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, _hoisted_10)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_11, "الغاء الحظر ", 512
     /* NEED_PATCH */
-    ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, item.blocked]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_12, "حظر", 512
+    ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, item.blocked && !$data.status]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_12, " حظر ", 512
     /* NEED_PATCH */
-    ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, !item.blocked]])])]);
+    ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, !item.blocked && !$data.status]])], 8
+    /* PROPS */
+    , _hoisted_7)]);
   }), 128
   /* KEYED_FRAGMENT */
   ))])])]);
@@ -32579,10 +32578,10 @@ var _hoisted_5 = {
 };
 var _hoisted_6 = ["onClick"];
 var _hoisted_7 = {
-  "class": "mx-auto w-1/6 whitespace-nowrap overflow-auto"
+  "class": "mx-auto w-1/6 whitespace-nowrap"
 };
 var _hoisted_8 = {
-  "class": "mx-auto w-1/6 whitespace-nowrap overflow-auto flex items-center justify-around"
+  "class": "mx-auto w-1/6 whitespace-nowrap flex items-center justify-around"
 };
 
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "المشتري:", -1
@@ -32590,7 +32589,7 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_10 = {
-  "class": "mx-auto w-1/6 whitespace-nowrap overflow-auto flex items-center justify-around"
+  "class": "mx-auto w-1/6 whitespace-nowrap flex items-center justify-around"
 };
 
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "البائع:", -1
@@ -32598,7 +32597,7 @@ var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_12 = {
-  "class": "mx-auto w-1/6 whitespace-nowrap overflow-auto flex items-center justify-around"
+  "class": "mx-auto w-1/6 whitespace-nowrap flex items-center justify-around"
 };
 
 var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "المجموع:", -1
@@ -32666,7 +32665,7 @@ var _hoisted_27 = {
   "class": "w-full py-4 px-2 bg-gray-200 h-64 overflow-auto rounded-lg"
 };
 var _hoisted_28 = {
-  "class": "mx-auto w-1/6 whitespace-nowrap overflow-auto flex items-center justify-around"
+  "class": "mx-auto w-1/6 whitespace-nowrap flex items-center justify-around"
 };
 
 var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "الاسم:", -1
@@ -32674,7 +32673,7 @@ var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_30 = {
-  "class": "mx-auto w-1/6 whitespace-nowrap overflow-auto flex items-center justify-around"
+  "class": "mx-auto w-1/6 whitespace-nowrap flex items-center justify-around"
 };
 
 var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "السعر:", -1
@@ -32682,7 +32681,7 @@ var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_32 = {
-  "class": "mx-auto w-1/6 whitespace-nowrap overflow-auto flex items-center justify-around"
+  "class": "mx-auto w-1/6 whitespace-nowrap flex items-center justify-around"
 };
 
 var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "رقم القطعة:", -1
@@ -32772,7 +32771,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* TEXT */
       )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.editData.products, function (item) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-          "class": "w-full p-2 bg-white shadow-lg flex",
+          "class": "w-full my-2 rounded-lg p-2 bg-white shadow-lg flex",
           key: item.id
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_28, [_hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1
         /* TEXT */
