@@ -24,6 +24,7 @@ return new class extends Migration
             $table->boolean('blocked')->default(false);
             $table->char('phone',20)->nullable();
             $table->rememberToken();
+            $table->text('image');
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
