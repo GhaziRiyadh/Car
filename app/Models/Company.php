@@ -13,6 +13,11 @@ class Company extends Model
     protected $fillable = ['name'];
     protected $table = 'companies';
 
+    protected $hidden=[
+        'created_at',
+        'updated_at',
+    ];
+
     public function cars(): HasMany
     {
         return $this->hasMany(Car::class, 'company_id');
