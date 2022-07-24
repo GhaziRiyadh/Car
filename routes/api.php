@@ -22,7 +22,7 @@ Route::get('/get-file', function (Request $request) {
 
 //flutter api
 Route::post('get/companies',[FlutterAppController::class,'getAllCompanies']);
-Route::get('get/company/cars',[FlutterAppController::class,'getCompanyCars']);
+Route::post('get/company/cars',[FlutterAppController::class,'getCompanyCars']);
 
 
 

@@ -16,7 +16,7 @@ class FlutterAppController extends Controller
 
     public function getCompanyCars (Request $request)
     {
-        $cars=Car::where('company_id',$request->id)->get(['id','name'])->toArray();
+        $cars=Car::where('company_id',$request->companyID)->get(['id','name'])->toArray();
         return response()->json($cars);
 
     }
