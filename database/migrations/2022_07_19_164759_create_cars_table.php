@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->char('name', 50);
             $table->foreignId('company_id');
-            $table->char('model', 50);
+            $table->integer('model');
             $table->integer('year');
             $table->char('color', 50);
             $table->char('motor_type', 50);

@@ -32,12 +32,12 @@ export default {
     data() {
         return {
             links: [
-                // {
-                //     type: "DASHBOARD",
-                //     title: "Dashboard",
-                //     isShow: false,
-                //     subUrl: []
-                // },
+                {
+                    type: "DASHBOARD",
+                    title: "Dashboard",
+                    isShow: false,
+                    subUrl: []
+                },
                 {
                     type: "CONTENT",
                     title: "ادارة المحتوى",

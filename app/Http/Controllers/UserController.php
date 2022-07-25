@@ -21,22 +21,22 @@ class UserController extends Controller
             'email' => 'required|email|exists:users,email',
             'password' => 'required',
         ]);
-        $user = User::query()->where('email','=', $data['email'])->first();
+        $user = User::query()->where('email', '=', $data['email'])->first();
 
-//        return  response()->json($user->email);
+        //        return  response()->json($user->email);
         if (!$user) {
             abort(434, "لا يوجد حساب بهذا البريد الالكتروني");
         } else {
-//            if (Hash::check($request->password, $user->password)) {
-                return response()->json([
-                    'id' => $user->id,
-                    'token' => $user->createToken($request->email)->plainTextToken,
-                    'phone' => $user->phone,
-                    'email' => $user->email,
-                    'name' => $user->name,
-                ]);
-//            }
-//            abort(434, "كلمة المرور غير صحيحة");
+            //            if (Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'id' => $user->id,
+                'token' => $user->createToken($request->email)->plainTextToken,
+                'phone' => $user->phone,
+                'email' => $user->email,
+                'name' => $user->name,
+            ]);
+            //            }
+            //            abort(434, "كلمة المرور غير صحيحة");
         }
     }
 
@@ -47,10 +47,10 @@ class UserController extends Controller
 
             $result = strval(rand(111111, 999999));
 
-//            $request->validate([
-//                ///name of request => 'unique: table name ,column name ';
-//                'email' => 'unique:users:email|email'
-//            ]);
+            //            $request->validate([
+            //                ///name of request => 'unique: table name ,column name ';
+            //                'email' => 'unique:users:email|email'
+            //            ]);
 
             $confirmCode = User::create([
                 'name' => $request->userName,

@@ -14,8 +14,8 @@ class CarController extends Controller
     public static function getCars($id = null, $name = null)
     {
         $cars = Car::with('company:id,name')
-            ->when($id, fn($q, $id) => $q->where('id', $id))
-            ->when($name, fn($q, $name) => $q->where('name', 'like', '%' . $name . '%'))
+            ->when($id, fn ($q, $id) => $q->where('id', $id))
+            ->when($name, fn ($q, $name) => $q->where('name', 'like', '%' . $name . '%'))
             ->get()
             ->toArray();
 
@@ -62,7 +62,7 @@ class CarController extends Controller
         return $request->validate([
             'name' => 'required:string|max:255',
             'company_id' => 'required:exists:companies,id',
-            'model' => 'required:string|max:255',
+            'model' => 'required|integer|min:1940|max:' . Carbon::now()->year,
             'year' => 'required|integer|min:1940|max:' . Carbon::now()->year,
             'color' => 'required:string|max:255',
             'motor_type' => 'required:string|max:255',

@@ -151,7 +151,7 @@ const logout = () => {
                                         </div>
 
                                         <JetDropdownLink :href="route('profile.show')">
-                                            Profile
+                                            المستخدم
                                         </JetDropdownLink>
 
                                         <JetDropdownLink v-if="$page.props.jetstream.hasApiFeatures"
@@ -162,9 +162,9 @@ const logout = () => {
                                         <div class="border-t border-gray-100" />
 
                                         <!-- Authentication -->
-                                        <form @submit.prevent="logout">
-                                            <JetDropdownLink as="button">
-                                                Log Out
+                                        <form dir="rtl" @submit.prevent="logout">
+                                            <JetDropdownLink dir="rtl" as="button">
+                                                تسجيل الخروج
                                             </JetDropdownLink>
                                         </form>
                                     </template>

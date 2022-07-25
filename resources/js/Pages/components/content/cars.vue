@@ -3,8 +3,7 @@
         <!-- tables -->
         <div class="w-full h-full ">
             <div class="h-full overflow-auto snap-y scroll-smooth span-center bg-gray-50 p-1">
-                <div
-                    class="flex bg-white min-h-[6vh] rounded-lg items-center text-center text-xs shadow-lg my-2 hover:bg-secondary hover:text-white cursor-pointer"
+                <div class="flex bg-white min-h-[6vh] rounded-lg items-center text-center text-xs shadow-lg my-2 hover:bg-secondary hover:text-white cursor-pointer"
                     v-for="(item, index) in showData" :key="index" @click="editForm(item.id)">
                     <span class="mx-auto w-1/6 whitespace-nowrap overflow-auto ">#{{ item.id }}</span>
                     <span class="mx-auto w-2/6 whitespace-nowrap overflow-auto ">اسم السيارة: {{ item.name }}</span>
@@ -26,73 +25,70 @@
             <template #model-content>
                 <div class="grid grid-cols-2 gap-4 my-2">
                     <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="اسم السيارة"/>
+                        <JetLabel class="mb-2" value="اسم السيارة" />
 
                         <JetInput v-model="addData.name" type="text" class="mt-1 block w-full"
-                                  placeholder="اسم السيارة"/>
+                            placeholder="اسم السيارة" />
 
-                        <JetInputError :message="addDataError.name[0]" class="mt-2"/>
+                        <JetInputError :message="addDataError.name[0]" class="mt-2" />
                     </div>
                     <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="الموديل"/>
+                        <JetLabel class="mb-2" value="الموديل" />
 
-                        <JetInput v-model="addData.model" type="text" class="mt-1 block w-full"
-                                  placeholder="الموديل"/>
+                        <JetInput v-model="addData.model" type="number" class="mt-1 block w-full"
+                            placeholder="الموديل" />
 
-                        <JetInputError :message="addDataError.model[0]" class="mt-2"/>
+                        <JetInputError :message="addDataError.model[0]" class="mt-2" />
                     </div>
                     <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="العام"/>
+                        <JetLabel class="mb-2" value="العام" />
 
                         <input v-model="addData.year" type="number" min="1940"
-                               class="mt-1 block w-full border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full"
-                               placeholder="العام"/>
+                            class="mt-1 block w-full border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full"
+                            placeholder="العام" />
 
-                        <JetInputError :message="addDataError.year[0]" class="mt-2"/>
+                        <JetInputError :message="addDataError.year[0]" class="mt-2" />
                     </div>
                     <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="اللون"/>
+                        <JetLabel class="mb-2" value="اللون" />
 
-                        <JetInput v-model="addData.color" type="color" class="mt-1 block w-full"
-                                  placeholder="اللون"/>
+                        <JetInput v-model="addData.color" type="color" class="mt-1 block w-full" placeholder="اللون" />
 
-                        <JetInputError :message="addDataError.color[0]" class="mt-2"/>
+                        <JetInputError :message="addDataError.color[0]" class="mt-2" />
                     </div>
                     <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="الشركة"/>
+                        <JetLabel class="mb-2" value="الشركة" />
 
                         <select v-model="addData.company"
-                                class="border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full">
+                            class="border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full">
                             <option class="border-secondary rounded-md shadow-sm"
-                                    v-for="(item, index) in showRoles.company" :key="index" :value="item.id"
-                                    v-text="item.name"></option>
+                                v-for="(item, index) in showRoles.company" :key="index" :value="item.id"
+                                v-text="item.name"></option>
                         </select>
 
-                        <JetInputError :message="addDataError.company[0]" class="mt-2"/>
+                        <JetInputError :message="addDataError.company[0]" class="mt-2" />
                     </div>
                     <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="نوع المحرك"/>
+                        <JetLabel class="mb-2" value="نوع المحرك" />
 
                         <select v-model="addData.motor_type"
-                                class="border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full">
-                            <option class="border-secondary rounded-md shadow-sm"
-                                    v-for="(item, index) in motor_type" :key="index" :value="item"
-                                    v-text="item"></option>
+                            class="border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full">
+                            <option class="border-secondary rounded-md shadow-sm" v-for="(item, index) in motor_type"
+                                :key="index" :value="item" v-text="item"></option>
                         </select>
 
-                        <JetInputError :message="addDataError.motor_type[0]" class="mt-2"/>
+                        <JetInputError :message="addDataError.motor_type[0]" class="mt-2" />
                     </div>
                     <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="نوع الوقود"/>
+                        <JetLabel class="mb-2" value="نوع الوقود" />
 
                         <select v-model="addData.oil_type"
-                                class="border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full">
-                            <option class="border-secondary rounded-md shadow-sm"
-                                    v-for="(item, index) in oil_type" :key="index" :value="item"
-                                    v-text="item"></option>
+                            class="border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full">
+                            <option class="border-secondary rounded-md shadow-sm" v-for="(item, index) in oil_type"
+                                :key="index" :value="item" v-text="item"></option>
                         </select>
 
-                        <JetInputError :message="addDataError.oil_type[0]" class="mt-2"/>
+                        <JetInputError :message="addDataError.oil_type[0]" class="mt-2" />
                     </div>
                 </div>
             </template>
@@ -121,73 +117,70 @@
             <template #model-content>
                 <div class="grid grid-cols-2 gap-4 my-2">
                     <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="اسم السيارة"/>
+                        <JetLabel class="mb-2" value="اسم السيارة" />
 
                         <JetInput v-model="editData.name" type="text" class="mt-1 block w-full"
-                                  placeholder="اسم السيارة"/>
+                            placeholder="اسم السيارة" />
 
-                        <JetInputError :message="editDataError.name[0]" class="mt-2"/>
+                        <JetInputError :message="editDataError.name[0]" class="mt-2" />
                     </div>
                     <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="الموديل"/>
+                        <JetLabel class="mb-2" value="الموديل" />
 
-                        <JetInput v-model="editData.model" type="text" class="mt-1 block w-full"
-                                  placeholder="الموديل"/>
+                        <JetInput v-model="editData.model" type="number" class="mt-1 block w-full"
+                            placeholder="الموديل" />
 
-                        <JetInputError :message="editDataError.model[0]" class="mt-2"/>
+                        <JetInputError :message="editDataError.model[0]" class="mt-2" />
                     </div>
                     <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="العام"/>
+                        <JetLabel class="mb-2" value="العام" />
 
                         <input v-model="editData.year" type="number" min="1940"
-                               class="mt-1 block w-full border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full"
-                               placeholder="العام"/>
+                            class="mt-1 block w-full border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full"
+                            placeholder="العام" />
 
-                        <JetInputError :message="editDataError.year[0]" class="mt-2"/>
+                        <JetInputError :message="editDataError.year[0]" class="mt-2" />
                     </div>
                     <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="اللون"/>
+                        <JetLabel class="mb-2" value="اللون" />
 
-                        <JetInput v-model="editData.color" type="color" class="mt-1 block w-full"
-                                  placeholder="اللون"/>
+                        <JetInput v-model="editData.color" type="color" class="mt-1 block w-full" placeholder="اللون" />
 
-                        <JetInputError :message="editDataError.color[0]" class="mt-2"/>
+                        <JetInputError :message="editDataError.color[0]" class="mt-2" />
                     </div>
                     <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="الشركة"/>
+                        <JetLabel class="mb-2" value="الشركة" />
 
                         <select v-model="editData.company"
-                                class="border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full">
+                            class="border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full">
                             <option class="border-secondary rounded-md shadow-sm"
-                                    v-for="(item, index) in showRoles.company" :key="index" :value="item.id"
-                                    v-text="item.name"></option>
+                                v-for="(item, index) in showRoles.company" :key="index" :value="item.id"
+                                v-text="item.name"></option>
                         </select>
 
-                        <JetInputError :message="editDataError.company[0]" class="mt-2"/>
+                        <JetInputError :message="editDataError.company[0]" class="mt-2" />
                     </div>
                     <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="نوع المحرك"/>
+                        <JetLabel class="mb-2" value="نوع المحرك" />
 
                         <select v-model="editData.motor_type"
-                                class="border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full">
-                            <option class="border-secondary rounded-md shadow-sm"
-                                    v-for="(item, index) in motor_type" :key="index" :value="item"
-                                    v-text="item"></option>
+                            class="border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full">
+                            <option class="border-secondary rounded-md shadow-sm" v-for="(item, index) in motor_type"
+                                :key="index" :value="item" v-text="item"></option>
                         </select>
 
-                        <JetInputError :message="editDataError.motor_type[0]" class="mt-2"/>
+                        <JetInputError :message="editDataError.motor_type[0]" class="mt-2" />
                     </div>
                     <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="نوع الوقود"/>
+                        <JetLabel class="mb-2" value="نوع الوقود" />
 
                         <select v-model="editData.oil_type"
-                                class="border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full">
-                            <option class="border-secondary rounded-md shadow-sm"
-                                    v-for="(item, index) in oil_type" :key="index" :value="item"
-                                    v-text="item"></option>
+                            class="border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full">
+                            <option class="border-secondary rounded-md shadow-sm" v-for="(item, index) in oil_type"
+                                :key="index" :value="item" v-text="item"></option>
                         </select>
 
-                        <JetInputError :message="editDataError.oil_type[0]" class="mt-2"/>
+                        <JetInputError :message="editDataError.oil_type[0]" class="mt-2" />
                     </div>
                 </div>
             </template>
@@ -382,7 +375,7 @@ export default {
             this.showForm.update = true
         },
         update() {
-            axios.post(route('car.update', {car: this.editData.id}), {
+            axios.post(route('car.update', { car: this.editData.id }), {
                 name: this.editData.name,
                 company_id: this.editData.company,
                 model: this.editData.model,
@@ -441,20 +434,44 @@ export default {
             })
         },
         deleteFun() {
-            axios.get(route('car.delete', {car: this.editData.id})).then(r => {
+            axios.get(route('car.delete', { car: this.editData.id })).then(r => {
                 this.showData = this.showData.filter(v => v.id !== this.editData.id)
                 this.showForm.update = false;
                 this.addData = {
                     name: '',
+                    company: '',
+                    model: '',
+                    color: '',
+                    oil_type: 'ديزل',
+                    motor_type: 6,
+                    year: 2000,
                 }
                 this.addDataError = {
                     name: [''],
+                    company: [''],
+                    model: [''],
+                    color: [''],
+                    oil_type: [''],
+                    motor_type: [''],
+                    year: [''],
                 }
                 this.editData = {
                     name: '',
+                    company: '',
+                    model: '',
+                    color: '',
+                    oil_type: 'ديزل',
+                    motor_type: 6,
+                    year: 2000,
                 }
                 this.editDataError = {
                     name: [''],
+                    company: [''],
+                    model: [''],
+                    color: [''],
+                    oil_type: [''],
+                    motor_type: [''],
+                    year: [''],
                 }
                 this.$notify({
                     title: 'تم',

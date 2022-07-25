@@ -67,25 +67,25 @@ class User extends Authenticate
         'profile_photo_url',
     ];
 
-    public function password(): Attribute
+    // public function password(): Attribute
+    // {
+    //     return Attribute::make(
+    //         set: fn ($v) => bcrypt($v)
+    //     );
+    // }
+
+    public function sellerBill(): HasMany
     {
-        return Attribute::make(
-            set: fn ($v) => bcrypt($v)
-        );
+        return $this->hasMany(Bill::class, 'seller_id');
     }
 
-    public function sellerBill():HasMany
+    public function buyerBill(): HasMany
     {
-        return $this->hasMany(Bill::class,'seller_id');
-    }
-
-    public function buyerBill():HasMany
-    {
-        return $this->hasMany(Bill::class,'payer_id');
+        return $this->hasMany(Bill::class, 'payer_id');
     }
 
     public function image(): MorphMany
     {
-        return $this->morphMany(Image::class,'imageable');
+        return $this->morphMany(Image::class, 'imageable');
     }
 }

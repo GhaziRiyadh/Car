@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('status_id');
             $table->string('payment_method');
             $table->integer('confirm_code')->nullable();
-            $table->dateTime('date');
+            $table->date('date')->nullable();
             $table->integer('total');
             $table->timestamps();
         });
