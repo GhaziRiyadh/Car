@@ -24,6 +24,7 @@ Route::get('/get-file', function (Request $request) {
 Route::post('get/companies', [FlutterAppController::class, 'getAllCompanies']);
 Route::post('get/company/cars', [FlutterAppController::class, 'getCompanyCars']);
 Route::post('search', [FlutterAppController::class, 'search']);
+Route::post('get-user-bills', [FlutterAppController::class, 'userBills']);
 
 
 
