@@ -24,7 +24,6 @@ class ProductFactory extends Factory
             'quality_id' => rand(1, Quality::count()),
             'piece_number' => rand(1, 100),
             'percentage_of_sale' => 5,
-            'car_id' => rand(1, Car::count()),
         ];
     }
 }

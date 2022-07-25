@@ -13,8 +13,8 @@
             </div>
         </div>
         <!-- tables -->
-        <div class="w-full h-[60vh]">
-            <div class="h-4/5 overflow-auto snap-y scroll-smooth span-center bg-gray-50 p-1">
+        <div class="w-full h-full">
+            <div class="h-full overflow-auto snap-y scroll-smooth span-center bg-gray-50 p-1">
                 <div class="flex bg-white min-h-[6vh] rounded-lg items-center text-center text-xs shadow-lg my-2 hover:bg-secondary hover:text-white cursor-pointer"
                     v-for="(item, index) in showData" :key="index" @click="editForm(item.id)">
                     <span class="mx-auto w-1/6 whitespace-nowrap ">#{{ item.id }}</span>

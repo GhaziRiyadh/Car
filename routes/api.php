@@ -21,15 +21,21 @@ Route::get('/get-file', function (Request $request) {
 });
 
 //flutter api
-Route::post('get/companies',[FlutterAppController::class,'getAllCompanies']);
-Route::post('get/company/cars',[FlutterAppController::class,'getCompanyCars']);
+Route::post('get/companies', [FlutterAppController::class, 'getAllCompanies']);
+Route::post('get/company/cars', [FlutterAppController::class, 'getCompanyCars']);
+Route::post('search', [FlutterAppController::class, 'search']);
 
 
 
 
 
 // login
-Route::post('api-login', [UserController::class, 'login']);
+Route::post('login', [UserController::class, 'login']);
+Route::post('signup', [UserController::class, 'signup']);
+Route::post('send/confirm/code', [UserController::class, 'sendConfirmCode']);
+Route::post('check/confirm/code', [UserController::class, 'checkConfirmCode']);
+Route::post('edit/password', [UserController::class, 'restorePassword']);
+Route::post('edit/user/details', [UserController::class, 'editUserDetails']);
 // Route::post('sure-login', [UserController::class, 'login']);
 
 Route::post('check-user', [UserController::class, 'checkUser']);
@@ -90,3 +96,5 @@ Route::get('get-subject-with-course', [FrontEndController::class, 'getSubjectWit
 Route::post('users-roles', function (Request $request) {
     return response()->json(RoleController::getRole());
 });
+
+Route::post('get-company-products', [FlutterAppController::class, 'getAllCompaniesProducts']);

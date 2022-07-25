@@ -17,7 +17,9 @@
         "laravel/tinker": "^2.7",
         "pusher/pusher-php-server": "^7.0",
         "santigarcor/laratrust": "^7.1",
-        "tightenco/ziggy": "^1.0"
+        "tightenco/ziggy": "^1.0",
+        "vonage/client": "^3.0",
+        "ext-json/ext-json": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

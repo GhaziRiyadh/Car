@@ -34,6 +34,7 @@ class UsersController extends Controller
                     'name' => $v['name'],
                     'permissions' => $permissions,
                     'email' => $v['email'],
+                    'phone' => $v['phone'],
                     'type' => $userRole,
                 ];
             });

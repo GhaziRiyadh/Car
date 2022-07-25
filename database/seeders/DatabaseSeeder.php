@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\Bill;
 use App\Models\BillStatus;
+use App\Models\Car;
 use App\Models\Classes;
+use App\Models\Company;
 use App\Models\Level;
 use App\Models\LevelStudent;
 use App\Models\LevelTeacher;
@@ -50,7 +52,20 @@ class DatabaseSeeder extends Seeder
 
         User::factory(100)->create();
         Bill::factory(100)->create();
-        Product::factory(200)->create();
+        Company::factory(3)->has(Car::factory(10)->hasProducts(10))->create();
+
+
+        foreach (Product::all() as $product) {
+            $product->image()->create([
+                'path' => 'logo.jpg',
+            ]);
+        }
+
+        foreach (User::all() as $user) {
+            $user->image()->create([
+                'path' => 'logo.jpg',
+            ]);
+        }
 
         foreach (Bill::all() as $bill) {
             $number = rand(1, 15);
@@ -60,7 +75,7 @@ class DatabaseSeeder extends Seeder
                 $product->bills()->attach($bill);
                 $total += intval($product->price);
             }
-            $bill->update(['total' => intval($total)]);
+            $bill->update(['total' => $total]);
         }
 
         foreach (User::all() as $key) {

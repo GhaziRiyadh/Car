@@ -43,10 +43,10 @@ export default {
                     title: "ادارة المحتوى",
                     isShow: false,
                     subUrl: [
-                        {title:'الشركات',type: 'COMPANY',isShow: false},
-                        {title:'السيارات',type: 'CARS',isShow: false},
-                        {title:'المنتجات',type: 'PRODUCT',isShow: false},
-                        {title:'الفواتير',type: 'BILL',isShow: false},
+                        { title: 'الشركات', type: 'COMPANY', isShow: false },
+                        { title: 'السيارات', type: 'CARS', isShow: false },
+                        { title: 'المنتجات', type: 'PRODUCT', isShow: false },
+                        { title: 'الفواتير', type: 'BILL', isShow: false },
                     ]
                 },
                 {
@@ -54,19 +54,19 @@ export default {
                     title: "ادارة التطبيق",
                     isShow: false,
                     subUrl: [
-                        {title:'مستخدمي التطبيق',type: 'APP_USERS',isShow: false},
-                        {title:'معلومات التطبيق',type: 'APP_INFO',isShow: false},
+                        { title: 'مستخدمي التطبيق', type: 'APP_USERS', isShow: false },
+                        { title: 'معلومات التطبيق', type: 'APP_INFO', isShow: false },
                     ]
                 },
-                {
-                    type: "USERS",
-                    title: "ادارة المستحدمين",
-                    subUrl: [
-                        { title: 'المستخدمين', type: "USER", isShow: false },
-                        { title: "انواع المستخدمين", type: 'ROLE', isShow: false },
-                        { title: "الصلاحيات", type: 'PERMISSION', isShow: false },
-                    ],
-                },
+                // {
+                //     type: "USERS",
+                //     title: "ادارة المستحدمين",
+                //     subUrl: [
+                //         { title: 'المستخدمين', type: "USER", isShow: false },
+                //         { title: "انواع المستخدمين", type: 'ROLE', isShow: false },
+                //         { title: "الصلاحيات", type: 'PERMISSION', isShow: false },
+                //     ],
+                // },
             ],
             isType: {}
         }

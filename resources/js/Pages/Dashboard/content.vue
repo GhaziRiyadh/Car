@@ -1,5 +1,5 @@
 <template>
-    <div class=" h-[80vh] w-full overflow-auto shadow-xl sm:rounded-lg px-6">
+    <div class="h-[80vh] w-full overflow-auto shadow-xl sm:rounded-lg px-6">
 
         <!-- top -->
         <div v-if="!['APP_INFO'].includes(isType.type)" class="w-full border-b-2 my-2 py-2">
@@ -17,17 +17,17 @@
             </div>
         </div>
 
-        <Bills v-if="isType.type === 'BILL'" @closeModel="showForm.update = false; showForm.add = false"
+        <Bills class="h-[60vh]" v-if="isType.type === 'BILL'" @closeModel="showForm.update = false; showForm.add = false"
             :get-data="showData.data" :roles="showData.roles" :type="isType.type" :add-form="showForm.add" />
 
-        <company v-if="['COMPANY', 'CONTENT'].includes(isType.type)"
+        <company class="h-[68vh]" v-if="['COMPANY', 'CONTENT'].includes(isType.type)"
             @closeModel="showForm.update = false; showForm.add = false" :get-data="showData.data"
             :roles="showData.roles" :type="isType.type" :add-form="showForm.add" />
 
-        <Cars v-if="isType.type === 'CARS'" @closeModel="showForm.update = false; showForm.add = false"
+        <Cars class="h-[68vh]" v-if="isType.type === 'CARS'" @closeModel="showForm.update = false; showForm.add = false"
             :get-data="showData.data" :roles="showData.roles" :type="isType.type" :add-form="showForm.add" />
 
-        <Product v-if="isType.type === 'PRODUCT'" :getData="showData.data" :addForm="showForm.add"
+        <Product class="h-[68vh]" v-if="isType.type === 'PRODUCT'" :getData="showData.data" :addForm="showForm.add"
             :updateForm="showForm.update" :roles="showData.roles"
             @closeModel="showForm.update = false; showForm.add = false" />
 
@@ -38,21 +38,20 @@
 import PrimaryButton from '../../Jetstream/PrimaryButton.vue'
 import SecondaryButton from '../../Jetstream/SecondaryButton.vue'
 import JetInput from '../../Jetstream/Input.vue'
-import App_info from "../components/app/app_info";
 import Bills from "../components/content/bills";
 import Cars from "../components/content/cars";
-import Product from "../components/content/product";
 import Company from "../components/content/company";
+import Product from '../components/content/product.vue';
 
 export default {
     components: {
         Company,
-        Product,
         Cars,
         Bills,
         PrimaryButton,
         SecondaryButton,
         JetInput,
+        Product
     },
     created() {
 

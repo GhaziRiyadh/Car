@@ -17,24 +17,26 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $data = $request->validate([
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required',
+        ]);
+        $user = User::query()->where('email','=', $data['email'])->first();
 
+//        return  response()->json($user->email);
         if (!$user) {
-            abort(434, "لا يوجد حساب بهذا الإيميل");
+            abort(434, "لا يوجد حساب بهذا البريد الالكتروني");
         } else {
-            $checkPassword = Hash::check($request->password, $user->password);
-            if (!$checkPassword) {
-                abort(434, "كلمة المرور غير صحيحه");
-            } else {
+//            if (Hash::check($request->password, $user->password)) {
                 return response()->json([
                     'id' => $user->id,
                     'token' => $user->createToken($request->email)->plainTextToken,
-                    'phoneNumber' => $user->phoneNumber,
+                    'phone' => $user->phone,
                     'email' => $user->email,
-                    'image' => $user->image,
-                    'userName' => $user->userName,
+                    'name' => $user->name,
                 ]);
-            }
+//            }
+//            abort(434, "كلمة المرور غير صحيحة");
         }
     }
 
@@ -45,14 +47,14 @@ class UserController extends Controller
 
             $result = strval(rand(111111, 999999));
 
-            $request->validate([
-                ///name of request => 'unique: table name ,column name ';
-                'email' => 'unique:customer,email|email'
-            ]);
+//            $request->validate([
+//                ///name of request => 'unique: table name ,column name ';
+//                'email' => 'unique:users:email|email'
+//            ]);
 
             $confirmCode = User::create([
-                'userName' => $request->userName,
-                'phoneNumber' => $request->phoneNumber,
+                'name' => $request->userName,
+                'phone' => $request->phoneNumber,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
                 'confirm_code' => strval($result),
@@ -70,7 +72,7 @@ class UserController extends Controller
         return response()->json(['user' => $request->user(), 'isAuth' => Auth::check()]);
     }
 
-    public function confirmCode(Request $request)
+    public function checkConfirmCode(Request $request)
     {
         $user = User::where('email', $request->email)->where('confirm_code', $request->confirm_code)->first();
         if ($user) {
@@ -84,7 +86,7 @@ class UserController extends Controller
     {
         $user = User::where('email', $request->email)->first();
         if ($user) {
-            $password = $user->password = bcrypt($request->password);
+            $password = $user->password = $request->password;
 
             return response()->json('ok');
         } else {
@@ -107,24 +109,22 @@ class UserController extends Controller
 
         $user = User::where('id', $userToken->id)->first();
         $user->update([
-            'userName' => $request->userName,
-            'phoneNumber' => $request->phoneNumber,
+            'name' => $request->name,
+            'phone' => $request->phone,
             'email' => $request->email,
             // 'image' => $request->imageChanged == 'yes' ? ImageController::uploadImageBase64($request->image, 'usersImages') : $request->image,
-            'password' => bcrypt($request->password),
+            'password' => $request->password,
 
         ]);
 
         return response()->json([
             'id' => $user->id,
-            'token' => $request->api_token,
-            'phoneNumber' => $user->phoneNumber,
-            'image' => $user->image,
-            'userName' => $user->userName,
-            'email' => $user->email
+            'phone' => $user->fresh()->phone,
+            'name' => $user->fresh()->name,
+            'email' => $user->fresh()->email
         ]);
     }
-    public function sendVirfyCode(Request $request)
+    public function sendConfirmCode(Request $request)
     {
         $user = User::where('email', $request->email)->firstOrFail();
         $number = rand(111111, 999999);

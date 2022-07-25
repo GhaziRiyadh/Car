@@ -1,25 +1,24 @@
 <template>
     <div>
         <!-- tables -->
-        <div class="w-full h-[60vh]">
-            <div class="h-4/5 overflow-auto snap-y scroll-smooth span-center bg-gray-50 p-1">
-                <div
-                    class="flex bg-white min-h-[6vh] rounded-lg items-center text-center text-xs shadow-lg my-2 hover:bg-primary hover:text-white cursor-pointer"
+        <div class="w-full h-full">
+            <div class="h-full overflow-auto snap-y scroll-smooth span-center bg-gray-50 p-1">
+                <div class="flex bg-white min-h-[6vh] rounded-lg items-center text-center text-xs shadow-lg my-2 hover:bg-primary hover:text-white cursor-pointer"
                     v-for="(item, index) in showData" :key="index" @click="editForm(item.id)">
-                    <span class="mx-auto w-1/6 whitespace-nowrap overflow-auto ">#{{ item.id }}</span>
-                    <span class="mx-auto w-1/6 whitespace-nowrap overflow-auto flex items-center justify-around">
+                    <span class="mx-auto w-1/6 whitespace-nowrap ">#{{ item.id }}</span>
+                    <span class="mx-auto w-1/6 whitespace-nowrap flex items-center ">
                         <span>الاسم:</span>
                         <span>{{ item.name }}</span>
                     </span>
-                    <span class="mx-auto w-1/6 whitespace-nowrap overflow-auto flex items-center justify-around">
+                    <span class="mx-auto w-1/6 whitespace-nowrap flex items-center ">
                         <span>السعر:</span>
                         <span>{{ item.price }}</span>
                     </span>
-                    <span class="mx-auto w-1/6 whitespace-nowrap overflow-auto flex items-center justify-around">
+                    <span class="mx-auto w-2/6 whitespace-nowrap flex items-center ">
                         <span>السيارة:</span>
                         <span>{{ item.car }}</span>
                     </span>
-                    <span class="mx-auto w-1/6 whitespace-nowrap overflow-auto flex items-center justify-around">
+                    <span class="mx-auto w-1/6 whitespace-nowrap flex items-center ">
                         <span>الجودة:</span>
                         <span>{{ item.quality }}</span>
                     </span>
@@ -36,62 +35,68 @@
             </template>
             <!-- model-content -->
             <template #model-content>
-                <div class=" w-full my-2">
+                <div class=" grid grid-cols-2 gap-4 my-2">
                     <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="الاسم"/>
+                        <JetLabel class="mb-2" value="الاسم" />
 
-                        <JetInput v-model="addData.name" type="text" class="mt-1 block w-full" placeholder="الاسم"/>
+                        <JetInput v-model="addData.name" type="text" class="mt-1 block w-full" placeholder="الاسم" />
 
-                        <JetInputError :message="addDataError.name[0]" class="mt-2"/>
+                        <JetInputError :message="addDataError.name[0]" class="mt-2" />
                     </div>
                     <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="السعر"/>
+                        <JetLabel class="mb-2" value="السعر" />
 
-                        <JetInput v-model="addData.price" type="text" class="mt-1 block w-full" placeholder="الاسم"/>
+                        <JetInput v-model="addData.price" type="text" class="mt-1 block w-full" placeholder="السعر" />
 
-                        <JetInputError :message="addDataError.price[0]" class="mt-2"/>
+                        <JetInputError :message="addDataError.price[0]" class="mt-2" />
                     </div>
+
                     <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="النسبة"/>
-
-                        <JetInput v-model="addData.percentage_of_sale" type="text" class="mt-1 block w-full" placeholder="الاسم"/>
-
-                        <JetInputError :message="addDataError.percentage_of_sale[0]" class="mt-2"/>
-                    </div>
-                     <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="الصورة" />
-
-                        <input
-                            class="w-full rounded-md file:bg-secondary file:text-white file:px-4 file:py-2 p-2 file:rounded-md border file:hover:bg-primary file:border-none file:hover:shadow-lg"
-                            type="file" @change="setTo">
-
-
-                        <JetInputError :message="addDataError.image[0]" class="mt-2" />
-                    </div>
-                    <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="السيارة"/>
+                        <JetLabel class="mb-2" value="السيارة" />
 
                         <select v-model="addData.car_id"
-                                class="border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full">
-                            <option class="border-secondary rounded-md shadow-sm"
-                                    v-for="(item, index) in showRoles.car" :key="index" :value="item.id"
-                                    v-text="item.name"></option>
+                            class="border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full">
+                            <option class="border-secondary rounded-md shadow-sm" v-for="(item, index) in showRoles.car"
+                                :key="index" :value="item.id" v-text="item.name"></option>
                         </select>
 
-                        <JetInputError :message="addDataError.car_id[0]" class="mt-2"/>
+                        <JetInputError :message="addDataError.car_id[0]" class="mt-2" />
                     </div>
                     <div dir="rtl" class="w-full">
-                        <JetLabel class="mb-2" value="الجودة"/>
+                        <JetLabel class="mb-2" value="الجودة" />
 
                         <select v-model="addData.quality_id"
-                                class="border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full">
+                            class="border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full">
                             <option class="border-secondary rounded-md shadow-sm"
-                                    v-for="(item, index) in showRoles.quality" :key="index" :value="item.id"
-                                    v-text="item.name"></option>
+                                v-for="(item, index) in showRoles.quality" :key="index" :value="item.id"
+                                v-text="item.name"></option>
                         </select>
 
-                        <JetInputError :message="addDataError.quality_id[0]" class="mt-2"/>
+                        <JetInputError :message="addDataError.quality_id[0]" class="mt-2" />
                     </div>
+
+                </div>
+                <div dir="rtl" class="w-full">
+                    <JetLabel class="mb-2" value="رقم القطعة" />
+
+                    <JetInput v-model="addData.piece_number" type="text" class="mt-1 block w-full"
+                        placeholder="رقم القطعة" />
+
+                    <JetInputError :message="addDataError.piece_number[0]" class="mt-2" />
+                </div>
+                <div dir="rtl" class="w-full">
+                    <JetLabel class="mb-2" value="الصورة" />
+
+
+                    <label
+                        class=" text-sm leading-5 font-medium text-gray-700 flex h-64 bg-gray-300 rounded-lg items-center justify-center">
+                        <input type="file" @change="setTo" class="hidden" />
+                        <img v-if="image" :src="image" class="w-full h-64 rounded-lg" alt="" srcset="">
+                        <span v-else class="ml-2">اضغط لتغيير الصورة</span>
+                    </label>
+
+
+                    <JetInputError :message="addDataError.image[0]" class="mt-2" />
                 </div>
             </template>
             <template #model-footer>
@@ -109,8 +114,68 @@
         <!-- edit from -->
         <MyForm :show="showForm.update">
             <template #model-title>
-                <div dir="rtl" class="flex items-center ">
-                    <h2 class="text-lg mx-au font-medium text-primary" v-text="editData.date"></h2>
+                <div class=" grid grid-cols-2 gap-4 my-2">
+                    <div dir="rtl" class="w-full">
+                        <JetLabel class="mb-2" value="الاسم" />
+
+                        <JetInput v-model="editData.name" type="text" class="mt-1 block w-full" placeholder="الاسم" />
+
+                        <JetInputError :message="editDataError.name[0]" class="mt-2" />
+                    </div>
+                    <div dir="rtl" class="w-full">
+                        <JetLabel class="mb-2" value="السعر" />
+
+                        <JetInput v-model="editData.price" type="text" class="mt-1 block w-full" placeholder="السعر" />
+
+                        <JetInputError :message="editDataError.price[0]" class="mt-2" />
+                    </div>
+
+                    <div dir="rtl" class="w-full">
+                        <JetLabel class="mb-2" value="السيارة" />
+
+                        <select v-model="editData.car_id"
+                            class="border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full">
+                            <option class="border-secondary rounded-md shadow-sm" v-for="(item, index) in showRoles.car"
+                                :key="index" :value="item.id" v-text="item.name"></option>
+                        </select>
+
+                        <JetInputError :message="editDataError.car_id[0]" class="mt-2" />
+                    </div>
+                    <div dir="rtl" class="w-full">
+                        <JetLabel class="mb-2" value="الجودة" />
+
+                        <select v-model="editData.quality_id"
+                            class="border-secondary focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 rounded-md shadow-sm w-full">
+                            <option class="border-secondary rounded-md shadow-sm"
+                                v-for="(item, index) in showRoles.quality" :key="index" :value="item.id"
+                                v-text="item.name"></option>
+                        </select>
+
+                        <JetInputError :message="editDataError.quality_id[0]" class="mt-2" />
+                    </div>
+
+                </div>
+                <div dir="rtl" class="w-full">
+                    <JetLabel class="mb-2" value="رقم القطعة" />
+
+                    <JetInput v-model="editData.piece_number" type="text" class="mt-1 block w-full"
+                        placeholder="رقم القطعة" />
+
+                    <JetInputError :message="editDataError.piece_number[0]" class="mt-2" />
+                </div>
+                <div dir="rtl" class="w-full">
+                    <JetLabel class="mb-2" value="الصورة" />
+
+
+                    <label
+                        class=" text-sm leading-5 font-medium text-gray-700 flex h-64 bg-gray-300 rounded-lg items-center justify-center">
+                        <input type="file" @change="setTo" class="hidden" />
+                        <img v-if="image" :src="image" class="w-full rounded-lg h-64" alt="" srcset="">
+                        <span v-else class="ml-2">اضغط لتغيير الصورة</span>
+                    </label>
+
+
+                    <JetInputError :message="addDataError.image[0]" class="mt-2" />
                 </div>
             </template>
             <!-- model-content -->
@@ -160,6 +225,9 @@ export default {
         addForm: false,
         updateForm: false,
     },
+    created() {
+        console.log('products')
+    },
     data() {
         return {
             showForm: {
@@ -172,7 +240,7 @@ export default {
                 quality_id: [''],
                 car_id: [''],
                 image: [''],
-                percentage_of_sale: [''],
+                piece_number: [''],
             },
             editData: {
                 name: '',
@@ -180,7 +248,7 @@ export default {
                 quality_id: '',
                 car_id: '',
                 image: '',
-                percentage_of_sale: '',
+                piece_number: '',
             },
             addData: {
                 name: '',
@@ -188,7 +256,7 @@ export default {
                 quality_id: '',
                 car_id: '',
                 image: '',
-                percentage_of_sale: '',
+                piece_number: '',
             },
             addDataError: {
                 name: [''],
@@ -196,12 +264,12 @@ export default {
                 quality_id: [''],
                 car_id: [''],
                 image: [''],
-                percentage_of_sale: [''],
+                piece_number: [''],
             },
             showData: this.getData,
             showRoles: this.roles,
             isType: this.type,
-            image: this.getData.image[0]?.path,
+            image: '',
         }
     },
     watch: {
@@ -227,53 +295,59 @@ export default {
             form.append('name', this.addData.name)
             form.append('image', this.addData.image)
             form.append('price', this.addData.price)
-            form.append('percentage_of_sale', this.addData.percentage_of_sale)
             form.append('car_id', this.addData.car_id)
+            form.append('piece_number', this.addData.piece_number)
             form.append('quality_id', this.addData.quality_id)
-            axios.post(route('product.store'), form).then(r => {
-                this.showData.push(r.data.product[0])
-                this.$emit('closeModel')
-                this.addData = {
-                    name: '',
-                    price: '',
-                    quality_id: '',
-                    car_id: '',
-                    image: '',
-                    percentage_of_sale: '',
-                }
-                this.addDataError = {
-                    name: [''],
-                    price: [''],
-                    quality_id: [''],
-                    car_id: [''],
-                    image: [''],
-                    percentage_of_sale: [''],
-                }
+            axios.post(route('product.store'), form)
+                .then(r => {
+                    this.showForm.add = false;
 
-                this.showForm.add = false
-                this.$notify({
-                    title: 'تم',
-                    text: 'كل شيئ على مايرام',
-                    type: 'success',
-                })
-            }).catch(er => {
-                this.$notify({
-                    title: 'Error',
-                    text: 'حدث خطاء ما!',
-                    type: 'warn',
-                });
-                console.log(er.response)
-                if (er.response) {
-                    this.addDataError = {
-                        name: er.response.data.errors.name ? er.response.data.errors.name : [''],
-                        image: er.response.data.errors.image ? er.response.data.errors.image : [''],
-                        quality_id: er.response.data.errors.quality_id ? er.response.data.errors.quality_id : [''],
-                        car_id: er.response.data.errors.car_id ? er.response.data.errors.car_id : [''],
-                        price: er.response.data.errors.price ? er.response.data.errors.price : [''],
-                        percentage_of_sale: er.response.data.errors.percentage_of_sale ? er.response.data.errors.percentage_of_sale : [''],
+                    this.showData.push(r.data[0])
+                    console.log('data', r)
+                    this.$emit('closeModel')
+                    this.addData = {
+                        name: '',
+                        price: '',
+                        quality_id: '',
+                        car_id: '',
+                        image: '',
+                        piece_number: '',
                     }
-                }
-            })
+                    this.addDataError = {
+                        name: [''],
+                        price: [''],
+                        quality_id: [''],
+                        car_id: [''],
+                        image: [''],
+                        piece_number: [''],
+                    }
+
+                    this.$notify({
+                        title: 'تم',
+                        text: 'كل شيئ على مايرام',
+                        type: 'success',
+                    })
+                    this.showForm.add = false;
+
+                }).catch(er => {
+                    this.$notify({
+                        title: 'Error',
+                        text: 'حدث خطاء ما!',
+                        type: 'warn',
+                    });
+                    console.log(er.response)
+                    if (er.response) {
+                        this.addDataError = {
+                            name: er.response.data.errors.name ? er.response.data.errors.name : [''],
+                            image: er.response.data.errors.image ? er.response.data.errors.image : [''],
+                            car_id: er.response.data.errors.car_id ? er.response.data.errors.car_id : [''],
+                            price: er.response.data.errors.price ? er.response.data.errors.price : [''],
+                            quality_id: er.response.data.errors.quality_id ? er.response.data.errors.quality_id : [''],
+                            piece_number: er.response.data.errors.piece_number ? er.response.data.errors.piece_number : [''],
+
+                        }
+                    }
+                })
         },
         editForm(id) {
             for (const item of this.showData) {
@@ -281,11 +355,12 @@ export default {
                     this.editData = {
                         id: item.id,
                         name: item.name,
-                        percentage_of_sale: item.percentage_of_sale,
                         price: item.price,
-                        car: this.roles.car.find(val => val.name === item.car)?.id,
-                        quality: this.roles.quality.find(val => val.name === item.quality)?.id,
+                        car_id: this.roles.car.find(val => val.name === item.car)?.id,
+                        quality_id: this.roles.quality.find(val => val.name === item.quality)?.id,
+                        piece_number: item.piece_number,
                     }
+                    this.image = '/' + item.image
                     break;
                 }
             }
@@ -293,15 +368,16 @@ export default {
         },
         update() {
             let form = new FormData()
-            form.append('name', this.addData.name)
-            form.append('image', this.addData.image)
-            form.append('price', this.addData.price)
-            form.append('percentage_of_sale', this.addData.percentage_of_sale)
-            form.append('car_id', this.addData.car_id)
-            form.append('quality_id', this.addData.quality_id)
-            axios.post(route('product.update', {product: this.editData.id}), form).then(r => {
+            form.append('name', this.editData.name)
+            form.append('image', this.editData.image)
+            form.append('price', this.editData.price)
+            form.append('piece_number', this.editData.piece_number)
+            form.append('car_id', this.editData.car_id)
+            form.append('quality_id', this.editData.quality_id)
+            axios.post(route('product.update', { product: this.editData.id }), form).then(r => {
+                console.log(r)
                 this.showData = this.showData.map(v => {
-                    if (v.id === this.editData.id) v = r.data.product[0]
+                    if (v.id === this.editData.id) v = r.data[0]
                     return v
                 })
                 this.showForm.update = false;
@@ -311,7 +387,7 @@ export default {
                     quality_id: '',
                     car_id: '',
                     image: '',
-                    percentage_of_sale: '',
+                    piece_number: '',
                 }
                 this.editDataError = {
                     name: [''],
@@ -319,13 +395,14 @@ export default {
                     quality_id: [''],
                     car_id: [''],
                     image: [''],
-                    percentage_of_sale: [''],
+                    piece_number: [''],
                 }
                 return this.$notify({
                     title: 'تم',
                     text: 'كل شيئ على مايرام',
                     type: 'success',
                 })
+                this.showForm.update = false;
 
             }).catch(er => {
                 this.$notify({
@@ -340,14 +417,14 @@ export default {
                         quality_id: er.response.data.errors.quality_id ? er.response.data.errors.quality_id : [''],
                         car_id: er.response.data.errors.car_id ? er.response.data.errors.car_id : [''],
                         price: er.response.data.errors.price ? er.response.data.errors.price : [''],
-                        percentage_of_sale: er.response.data.errors.percentage_of_sale ? er.response.data.errors.percentage_of_sale : [''],
+                        piece_number: er.response.data.errors.piece_number ? er.response.data.errors.piece_number : [''],
                     }
                 }
                 console.log(er)
             })
         },
         deleteFun() {
-            axios.get(route('product.delete', {product: this.editData.id})).then(r => {
+            axios.get(route('product.delete', { product: this.editData.id })).then(r => {
                 this.showData = this.showData.filter(v => v.id !== this.editData.id)
                 this.showForm.update = false;
                 this.editData = {
@@ -356,7 +433,7 @@ export default {
                     quality_id: '',
                     car_id: '',
                     image: '',
-                    percentage_of_sale: '',
+                    piece_number: '',
                 }
                 this.editDataError = {
                     name: [''],
@@ -364,7 +441,7 @@ export default {
                     quality_id: [''],
                     car_id: [''],
                     image: [''],
-                    percentage_of_sale: [''],
+                    piece_number: [''],
                 }
                 this.$notify({
                     title: 'تم',
@@ -383,9 +460,9 @@ export default {
         },
         setTo(e) {
             this.image = URL.createObjectURL(e.target.files[0])
-            this.editData.file = e.target.files[0]
-            this.addData.file = e.target.files[0]
-        }
-    }
+            this.editData.image = e.target.files[0]
+            this.addData.image = e.target.files[0]
+        },
+    },
 }
 </script>

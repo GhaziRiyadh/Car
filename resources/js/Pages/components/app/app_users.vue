@@ -1,27 +1,14 @@
 <template>
     <div>
-        <!-- <div class="w-full h-10 flex items-center justify-start my-1">
-            <div v-for="item in count" :key="item.name"
-                class="flex items-center justify-around border rounded-lg mx-1 cursor-pointer"
-                :class="isUser === item.name ? 'bg-primary text-gray-50' : 'hover:bg-primary hover:text-gray-50 text-gray-900'"
-                @click="isUser = item.name; getUsers()">
-                <span class="p-1 flex items-center text-xs justify-center text-center">{{ item.name }}</span>
-                <span class="h-8 w-8 text-xs m-1 rounded-full flex items-center justify-center bg-white"
-                    :class="isUser === item.name ? ' text-primary' : ' text-gray-900'">
-                    {{ item.count }}
-                </span>
-            </div>
-        </div> -->
-        <!-- tables -->
         <div class="w-full h-[70vh]">
             <div class="h-4/5 overflow-auto snap-y scroll-smooth span-center bg-gray-50 p-1">
                 <div class="flex bg-white min-h-[6vh] rounded-lg items-center text-center text-xs shadow-lg my-2 cursor-pointer"
                     v-for="(item, index) in showData" :key="index">
                     <span class="mx-auto w-1/6 whitespace-nowrap ">#{{ item.id }}</span>
                     <span class="mx-auto w-2/6 whitespace-nowrap ">الاسم : {{ item.name }}</span>
-                    <span class="mx-auto w-2/6 whitespace-nowrap ">الايميل: {{ item.name }}</span>
-                    <span class="mx-auto w-2/6 whitespace-nowrap ">التلفون: {{ item.name }}</span>
-                    <span @click="changeStatus(item.id, !item.blocked)" class="mx-auto w-1/6 whitespace-nowrap ">
+                    <span class="mx-auto w-2/6 whitespace-nowrap ">الايميل: {{ item.email }}</span>
+                    <span class="mx-auto w-2/6 whitespace-nowrap ">التلفون: {{ item.phone }}</span>
+                    <!-- <span @click="changeStatus(item.id, !item.blocked)" class="mx-auto w-1/6 whitespace-nowrap ">
                         <div v-if="status" class="flex items-center justify-center">
                             <div
                                 class=" animate-spin border-2 border-green-100 border-r-red-600 mx-1 rounded-full h-8 w-8">
@@ -35,7 +22,7 @@
                             class="py-1 px-2 border-primary rounded-lg text-primary hover:bg-primary hover:text-white hover:shadow-lg">
                             حظر
                         </span>
-                    </span>
+                    </span> -->
                 </div>
             </div>
         </div>

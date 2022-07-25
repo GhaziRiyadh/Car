@@ -10,7 +10,8 @@
                         <JetInput v-model="searchData" type="text" class="text-sm" :placeholder="`${isType.title}`" />
                     </div>
                     <SecondaryButton class="mx-1" @click="getRecords(searchData, type)">بحث</SecondaryButton>
-                    <PrimaryButton v-show="!['BILL'].includes(isType.type)" @click="showForm.add = true" class="mx-1">
+                    <PrimaryButton v-show="!['APP_MANAGEMENT', 'APP_USERS'].includes(isType.type)"
+                        @click="showForm.add = true" class="mx-1">
                         اضافة</PrimaryButton>
                 </div>
             </div>

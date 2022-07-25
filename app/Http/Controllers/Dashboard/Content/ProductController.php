@@ -16,9 +16,9 @@ class ProductController extends Controller
         $products = Product::with([
             'car:id,name',
             'quality:id,name',
-            'image:id,path',
-        ])->when($id, fn($q, $id) => $q->where('id', $id))
-            ->when($name, fn($q, $name) => $q->where('name', 'like', '%' . $name . '%'))
+            'image',
+        ])->when($id, fn ($q, $id) => $q->where('id', $id))
+            ->when($name, fn ($q, $name) => $q->where('name', 'like', '%' . $name . '%'))
             ->get()
             ->toArray();
 
@@ -28,10 +28,10 @@ class ProductController extends Controller
                     'id' => $v['id'],
                     'name' => $v['name'],
                     'price' => $v['price'],
-                    'quality' => $v['quality']['name'],
-                    'car' => $v['car']['name'],
-                    'image' => collect($v['image'])->map(fn($v) => $v['path'])->toArray(),
-                    'percentage_of_sale' => $v['percentage_of_sale'],
+                    'quality' => $v['quality']['name'] ?? null,
+                    'car' => $v['car']['name'] ?? null,
+                    'image' => $v['image']['path'] ?? null,
+                    'piece_number' => $v['piece_number'] ?? null,
                 ];
             });
     }
@@ -39,33 +39,43 @@ class ProductController extends Controller
     public function store(Request $request): JsonResponse
     {
         $data = self::setValidation($request);
-        $data['image'] = $request->file('image')->store('products');
+        $data['percentage_of_sale'] = intval($data['price']) * 0.05;
 
         $product = Product::query()->create($data);
+        $data['image'] = $request->file('image')->store('products');
 
-        return response()->json(self::getProducts(id: $product->id));
+        $product->image()->create([
+            'path' => $data['image'],
+        ]);
+
+        return response()->json(self::getProducts(id: $product->id),200);
     }
 
     public function update(Request $request, Product $product): JsonResponse
     {
         $data = self::setValidation($request);
+        $data['percentage_of_sale'] = intval($data['price']) * 0.05;
+
+        $product->update($data);
         $oldImage = $product->image()?->first()?->path;
         if (File::exists($oldImage)) {
             File::delete($oldImage);
             $data['image'] = $request->file('image')->store('products');
+            $product->image()->create([
+                'path' => $data['image'],
+            ]);
         }
 
-        $product->update($data);
 
-        return response()->json(self::getProducts(id: $product->id));
+        return response()->json(self::getProducts(id: $product->id), 200);
     }
 
-    public function delete(Product $product):JsonResponse
+    public function delete(Product $product): JsonResponse
     {
         $oldImage = $product->image()?->first()?->path;
-        if (File::exists($oldImage)) {
+        if (File::exists($oldImage))
             File::delete($oldImage);
-        }
+
 
         $product->delete();
 
@@ -83,7 +93,7 @@ class ProductController extends Controller
             'car_id' => 'required|exists:cars,id',
             'image' => $request->hasFile('image') ? 'required' : '',
             'image.*' => $request->hasFile('image') ? 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048' : '',
-            'percentage_of_sale' => 'required|numeric',
+            'piece_number' => 'required',
         ]);
     }
 }

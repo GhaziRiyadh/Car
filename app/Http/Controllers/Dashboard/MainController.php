@@ -66,19 +66,19 @@ class MainController extends Controller
                 'roles' => [],
             ],
 
-            // users
-            'USER', 'USERS' => [
-                'data' => UsersController::getUsers($name, type: 'admin'),
-                'roles' => RoleController::getRole(),
-            ],
-            'ROLE' => [
-                'data' => RoleController::getRole(name: $name),
-                'roles' => PermissionController::getPermission(),
-            ],
-            'PERMISSION' => [
-                'data' => PermissionController::getPermission($name),
-                'roles' => RoleController::getRole(),
-            ],
+                // users
+                // 'USER', 'USERS' => [
+                //     'data' => UsersController::getUsers($name, type: 'admin'),
+                //     'roles' => RoleController::getRole(),
+                // ],
+                // 'ROLE' => [
+                //     'data' => RoleController::getRole(name: $name),
+                //     'roles' => PermissionController::getPermission(),
+                // ],
+                // 'PERMISSION' => [
+                //     'data' => PermissionController::getPermission($name),
+                //     'roles' => RoleController::getRole(),
+                // ],
             default => [
                 'data' => [],
                 'roles' => [],

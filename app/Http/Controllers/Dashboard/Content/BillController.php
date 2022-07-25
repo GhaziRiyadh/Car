@@ -10,6 +10,9 @@ use App\Models\Classes;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Collection;
+use Vonage\Client;
+use Vonage\Client\Credentials\Basic;
+use Vonage\SMS\Message\SMS;
 
 class BillController extends Controller
 {
@@ -21,14 +24,14 @@ class BillController extends Controller
             'payer',
             'products',
         ])
-            ->when($id, fn($q, $r) => $q->where('id', '=', $r))
-            ->when($name, fn($q, $r) => $q->where('name', 'like', '%' . $r . '%'))
-            ->when($status, fn($q, $r) => $q->where('status_id', '=', $r))
+            ->when($id, fn ($q, $r) => $q->where('id', '=', $r))
+            ->when($name, fn ($q, $r) => $q->where('name', 'like', '%' . $r . '%'))
+            ->when($status, fn ($q, $r) => $q->where('status_id', '=', $r))
             ->get()
             ->toArray();
 
         return collect($bills)
-            ->map(fn($v) => [
+            ->map(fn ($v) => [
                 'id' => $v['id'],
                 'seller' => $v['seller']['name'],
                 'date' => $v['date'],
@@ -42,14 +45,21 @@ class BillController extends Controller
 
     public function changeStatus(Bill $bill, $status): JsonResponse
     {
-        $bill->update(['status_id' => BillStatus::where('name', '=', $status)->first()->id]);
-
+        $status = BillStatus::where('name', '=', $status)->first();
+        $bill->update(['status_id' => $status->id]);
+        // if ($status == 'قيد التوصيل') {
+        //     $confirm_code = rand(100000, 999999);
+        //     $bill->update(['confirm_code' => $confirm_code]);
+        //     $basic  = new Basic("3d0d771e", "sqEqpBWCOXNw2aJA");
+        //     $client = new Client($basic);
+        //     $response = $client->sms()->send(new SMS("967733649039", 'Car', 'رمز التأكد:' . $confirm_code));
+        // }
         return response()->json(self::getBills(id: $bill->id));
     }
 
     public function statusCount(): JsonResponse
     {
-        $count = BillStatus::all()->mapWithKeys(fn($v) => [$v->name => $v->bills->count()]);
+        $count = BillStatus::all()->mapWithKeys(fn ($v) => [$v->name => $v->bills->count()]);
 
         return response()->json($count);
     }

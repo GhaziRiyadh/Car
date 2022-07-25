@@ -19,7 +19,7 @@ return new class extends Migration
             $table->char('name', 50);
             $table->integer('price');
             $table->foreignId('quality_id');
-            $table->integer('piece_number');
+            $table->char('piece_number',50);
             $table->integer('percentage_of_sale');
             $table->foreignId('car_id');
             $table->timestamps();
