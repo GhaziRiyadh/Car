@@ -22,10 +22,11 @@ class CarFactory extends Factory
 
         // oil type
         $oil_type = ['ديزل', 'بترول', 'غاز'];
+        $model = $this->faker->numberBetween(2000, 2020);
         return [
             'name' => $this->faker->name(),
-            'model' => $this->faker->name(),
-            'year' => $this->faker->numberBetween(2000, 2020),
+            'model' => $model,
+            'year' => $model,
             'color' => $this->faker->hexColor(),
             'motor_type' => $this->faker->randomElement($motor_type),
             'oil_type' => $this->faker->randomElement($oil_type),
