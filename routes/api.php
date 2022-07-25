@@ -48,6 +48,8 @@ Route::post('check-user', [UserController::class, 'checkUser']);
 Route::middleware(['auth:sanctum'])->group(function () {
     // logout
     Route::post('logout', [UserController::class, 'logout']);
+
+    Route::post('add-new-bill', [FlutterAppController::class, 'addNewOrder']);
     Route::get('get-subject', [FrontEndController::class, 'getSubject']);
     Route::get('set-subject-file', [FrontEndController::class, 'setSubjectFile']);
     Route::get('set-student-by-level', [FrontEndController::class, 'getStudentByLevel']);

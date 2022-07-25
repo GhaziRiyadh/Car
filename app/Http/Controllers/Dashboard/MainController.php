@@ -49,7 +49,7 @@ class MainController extends Controller
 
 
             'BILL' => [
-                'data' => BillController::getBills(),
+                'data' => BillController::getBills(name: $name),
                 'roles' => [
                     'status' => BillStatus::all(['id', 'name']),
                 ],
@@ -57,7 +57,7 @@ class MainController extends Controller
 
             // APP management
             'APP_MANAGEMENT', 'APP_USERS' => [
-                'data' => UsersController::getUsers($name),
+                'data' => UsersController::getUsers(name: $name),
                 'roles' => []
             ],
 

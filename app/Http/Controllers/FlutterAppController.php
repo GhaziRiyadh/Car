@@ -7,8 +7,10 @@ use App\Models\Car;
 use App\Models\Company;
 use App\Models\Product;
 use App\Models\User;
+use Carbon\Carbon;
 use Error;
 use Exception;
+use Illuminate\Contracts\Mail\Attachable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\PersonalAccessToken;
@@ -82,7 +84,7 @@ class FlutterAppController extends Controller
     {
         $token = PersonalAccessToken::findToken($request->api_token);
         $user = $token->tokenable;
-        $bills = $user->sellerBill()->get(['id', 'date', 'total', 'status_id'])
+        $bills = $user->sellerBill()->get()
             ->map(
                 fn ($v) => [
                     'id' => $v->id,
@@ -105,29 +107,31 @@ class FlutterAppController extends Controller
     {
         DB::beginTransaction();
         try {
-            $user = $request->user();
-
             $token = PersonalAccessToken::findToken($request->api_token);
-            $customer = $token->tokenable;
+            $user = $token->tokenable;
 
             $orders = collect(json_decode($request->get('orders')));
+
+            $total = 0;
+            foreach ($orders as $order)
+                $total += intval(collect($order)->toArray()['price']);
 
 
             $bill = Bill::create(
                 [
                     'seller_id' => $user->id,
-                    'payer_id' => User::find(1),
-                    'status_id' => $request,
-                    'payment_method' => $request,
-                    'confirm_code' => $request,
-                    'date' => $request,
-                    'total' => $request,
+                    'payer_id' => User::find(1)?->id,
+                    'status_id' => 1,
+                    'payment_method' => '',
+                    'confirm_code' => null,
+                    'date' => $request->date,
+                    'total' => $total,
                 ]
             );
 
-            foreach ($orders as $order) {
-                $bill->products()->create(collect($order)->toArray());
-            }
+            foreach ($orders as $order)
+                $bill->products()->attach(collect($order)->toArray()['id']);
+
 
             DB::commit();
             return response()->json('تم إرسال الطلب بنجاح.');

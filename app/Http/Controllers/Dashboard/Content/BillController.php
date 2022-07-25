@@ -25,7 +25,7 @@ class BillController extends Controller
             'products',
         ])
             ->when($id, fn ($q, $r) => $q->where('id', '=', $r))
-            ->when($name, fn ($q, $r) => $q->where('name', 'like', '%' . $r . '%'))
+            ->when($name, fn ($q, $r) => $q->whereRelation('seller', 'name', 'like', '%' . $r . '%'))
             ->when($status, fn ($q, $r) => $q->where('status_id', '=', $r))
             ->get()
             ->toArray();
