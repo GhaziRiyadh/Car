@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bill;
 use App\Models\Car;
 use App\Models\Company;
 use App\Models\Product;
+use App\Models\User;
+use Error;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class FlutterAppController extends Controller
 {
@@ -41,23 +47,24 @@ class FlutterAppController extends Controller
 
     public function search(Request $request)
     {
-        $search = Product::with(['quality', 'image'])
-            ->whereHas(
-                'car',
-                fn ($query) => $query->where('id', '=', $request->carID)
-                    ->where('model', '=', $request->model)
+        $name = $request->name == 'null' ? null : $request->name;
+        $search = Product::with([
+            'quality',
+            'image'
+        ])->whereHas(
+            'car',
+            function ($query) use ($request) {
+                return $query
                     ->whereRelation('company', 'id', '=', $request->companyID)
-            )
+                    ->where('id',  $request->carID)
+                    ->where('year',  intval($request->model));
+            }
+        )
             ->when(
-                $request->piece_number,
-                fn ($q, $r) => $q->where('piece_number', 'like', '%' . $r . '%')
-            )
-            ->when(
-                $request->name,
+                $name,
                 fn ($q, $r) => $q->where('name', 'like', '%' . $r . '%')
             )
-            ->get()
-            ->map(
+            ->get()->map(
                 fn ($v) => [
                     'id' => $v->id,
                     'name' => $v->name,
@@ -73,29 +80,60 @@ class FlutterAppController extends Controller
 
     public function userBills(Request $request)
     {
-        $user = $request->user();
-        $bills = $user->sellerBill()->with(
-            [
-                'products:id,name, price, quality_id, car_id, piece_number' => fn ($q) => $q->with(
-                    [
-                        'quality:id,name',
-                        'car:id,name',
-                        'image:id,path'
-                    ]
-                ),
-                'status:id,name'
-            ]
-        )->get(['seller_id', 'date', 'total', 'status_id', 'payment_method', 'payer_id', 'confirm_code'])
+        $token = PersonalAccessToken::findToken($request->api_token);
+        $user = $token->tokenable;
+        $bills = $user->sellerBill()->get(['id', 'date', 'total', 'status_id'])
             ->map(
                 fn ($v) => [
                     'id' => $v->id,
-                    'price' => $v->price,
-                    'piece_number' => $v->piece_number,
-                    'quality' => $v?->products?->map(fn ($v) => $v?->quality?->name),
-                    'car' => $v?->products?->map(fn ($v) => $v?->car?->name),
-                    'image' => $v?->products?->map(fn ($v) => $v?->image?->path),
+                    'total' => $v->total,
+                    'date' => $v->date,
+                    'status' => $v->status()->first()?->name,
+                    'order' => $v?->products()->get()?->map(fn ($v) => [
+                        'id' => $v->id,
+                        'quality' => $v?->quality?->name,
+                        'name' => $v?->name,
+                        'price' => $v?->price,
+                        'piece_number' => $v?->piece_number,
+                    ]),
                 ]
             );
         return response()->json($bills);
+    }
+
+    public function addNewOrder(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $user = $request->user();
+
+            $token = PersonalAccessToken::findToken($request->api_token);
+            $customer = $token->tokenable;
+
+            $orders = collect(json_decode($request->get('orders')));
+
+
+            $bill = Bill::create(
+                [
+                    'seller_id' => $user->id,
+                    'payer_id' => User::find(1),
+                    'status_id' => $request,
+                    'payment_method' => $request,
+                    'confirm_code' => $request,
+                    'date' => $request,
+                    'total' => $request,
+                ]
+            );
+
+            foreach ($orders as $order) {
+                $bill->products()->create(collect($order)->toArray());
+            }
+
+            DB::commit();
+            return response()->json('تم إرسال الطلب بنجاح.');
+        } catch (Exception | Error $th) {
+            DB::rollBack();
+            abort(500, $th->getMessage());
+        }
     }
 }

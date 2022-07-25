@@ -182,14 +182,14 @@
             <template #model-footer>
                 <div dir="rtl" class="w-full flex items-center justify-between">
                     <div>
-                        <JetPrimaryButton @click="update()" class="mx-5">
+                        <JetPrimaryButton @click="update(); image = ''" class="mx-5">
                             حفظ
                         </JetPrimaryButton>
-                        <JetDangButton @click="deleteFun()" class="mx-5">
+                        <JetDangButton @click="deleteFun(); image = ''" class="mx-5">
                             حذف
                         </JetDangButton>
                     </div>
-                    <JetSecondaryButton @click="showForm.update = false">
+                    <JetSecondaryButton @click="showForm.update = false; image = ''">
                         الغاء
                     </JetSecondaryButton>
                 </div>
@@ -305,6 +305,7 @@ export default {
                     this.showData.push(r.data[0])
                     console.log('data', r)
                     this.$emit('closeModel')
+                    this.image = ''
                     this.addData = {
                         name: '',
                         price: '',
@@ -381,6 +382,7 @@ export default {
                     return v
                 })
                 this.showForm.update = false;
+                this.image = ''
                 this.editData = {
                     name: '',
                     price: '',
@@ -402,7 +404,6 @@ export default {
                     text: 'كل شيئ على مايرام',
                     type: 'success',
                 })
-                this.showForm.update = false;
 
             }).catch(er => {
                 this.$notify({

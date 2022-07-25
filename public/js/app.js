@@ -26576,10 +26576,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       axios.post(route('product.store'), form).then(function (r) {
         _this.showForm.add = false;
 
-        _this.showData.push(r.data.product[0]);
+        _this.showData.push(r.data[0]);
+
+        console.log('data', r);
 
         _this.$emit('closeModel');
 
+        _this.image = '';
         _this.addData = {
           name: '',
           price: '',
@@ -26681,11 +26684,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       axios.post(route('product.update', {
         product: this.editData.id
       }), form).then(function (r) {
+        console.log(r);
         _this3.showData = _this3.showData.map(function (v) {
-          if (v.id === _this3.editData.id) v = r.data.product[0];
+          if (v.id === _this3.editData.id) v = r.data[0];
           return v;
         });
         _this3.showForm.update = false;
+        _this3.image = '';
         _this3.editData = {
           name: '',
           price: '',
@@ -26707,7 +26712,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           text: 'كل شيئ على مايرام',
           type: 'success'
         });
-        _this3.showForm.update = false;
       })["catch"](function (er) {
         _this3.$notify({
           title: 'Error',
@@ -34114,7 +34118,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "model-footer": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_JetPrimaryButton, {
         onClick: _cache[14] || (_cache[14] = function ($event) {
-          return $options.update();
+          $options.update();
+          $data.image = '';
         }),
         "class": "mx-5"
       }, {
@@ -34126,7 +34131,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_JetDangButton, {
         onClick: _cache[15] || (_cache[15] = function ($event) {
-          return $options.deleteFun();
+          $options.deleteFun();
+          $data.image = '';
         }),
         "class": "mx-5"
       }, {
@@ -34138,7 +34144,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_JetSecondaryButton, {
         onClick: _cache[16] || (_cache[16] = function ($event) {
-          return $data.showForm.update = false;
+          $data.showForm.update = false;
+          $data.image = '';
         })
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {

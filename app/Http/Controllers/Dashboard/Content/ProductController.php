@@ -48,7 +48,7 @@ class ProductController extends Controller
             'path' => $data['image'],
         ]);
 
-        return response()->json(self::getProducts(id: $product->id),200);
+        return response()->json(self::getProducts(id: $product->id));
     }
 
     public function update(Request $request, Product $product): JsonResponse
@@ -57,11 +57,15 @@ class ProductController extends Controller
         $data['percentage_of_sale'] = intval($data['price']) * 0.05;
 
         $product->update($data);
+
         $oldImage = $product->image()?->first()?->path;
-        if (File::exists($oldImage)) {
-            File::delete($oldImage);
+
+        if ($request->hasFile('image')) {
+            if (File::exists($oldImage))
+                File::delete($oldImage);
+
             $data['image'] = $request->file('image')->store('products');
-            $product->image()->create([
+            $product->image()->update([
                 'path' => $data['image'],
             ]);
         }

@@ -11,7 +11,7 @@ class Bill extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['seller_id', 'date' , 'total', 'status_id', 'payment_method', 'payer_id', 'confirm_code'];
+    protected $fillable = ['seller_id', 'date', 'total', 'status_id', 'payment_method', 'payer_id', 'confirm_code'];
 
     public function seller(): Belongsto
     {
@@ -32,5 +32,4 @@ class Bill extends Model
     {
         return $this->belongsTo(BillStatus::class, 'status_id');
     }
-
 }
